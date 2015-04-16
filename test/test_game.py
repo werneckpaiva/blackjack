@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 
 from blackjack.blackjack_game import BlackjackGame, GameBustedException
+
 
 class Test(unittest.TestCase):
 
