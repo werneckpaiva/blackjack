@@ -1,12 +1,12 @@
 from blackjack.blackjack_game import BlackjackGame, GameBustedException
-
+import sys
 
 def main():
     game = BlackjackGame(shuffle=True)
     while True:
-        print "My cards: ", game.my_cards
+        sys.stdout.write("My cards: " + str(game.my_cards)+"\n")
         print "Dealer cards: ", game.dealer_cards[0]
-        option = raw_input('Hit(h) or Stand(s): ')
+        option = raw_input('Hit(h) or Stand(s) or Quit(q): ')
         if option == "s":
             game.stand()
             print "Dealer cards: ", game.dealer_cards
@@ -21,10 +21,13 @@ def main():
             break
         elif option == "h":
             try:
+                print "My cards: ", game.my_cards
                 game.hit()
             except GameBustedException:
                 print "You lose!!"
                 break
+        elif option == "q":
+            break
         else:
             print "Wrong option (s or h)"
 

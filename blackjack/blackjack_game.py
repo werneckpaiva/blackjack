@@ -5,12 +5,12 @@ import random
 
 class BlackjackGame(object):
 
-    DECK = "A,K,J,Q,2,3,4,5,6,7,8,9,10".split(",") * 4
     DECK_VALUES = {
         "A": 11, "K": 10, "Q": 10, "J": 10,
         "2": 2, "3": 3, "4": 4, "5": 5,
         "6": 6, "7": 7, "8": 8, "9": 9, "10": 10
     }
+    DECK = "A,K,J,Q,2,3,4,5,6,7,8,9,10".split(",") * 4
 
     WIN = 1
     LOSE = -1

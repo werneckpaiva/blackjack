@@ -5,7 +5,7 @@ import unittest
 from blackjack.blackjack_game import BlackjackGame, GameBustedException
 
 
-class Test(unittest.TestCase):
+class TestGame(unittest.TestCase):
 
     def test_start_game_player_cards(self):
         game = BlackjackGame()
