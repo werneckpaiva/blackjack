@@ -26,6 +26,6 @@ class TestGameInterface(unittest.TestCase):
         game._input = lambda x: "q"
         cmd_line_game = CommandLineGame()
         game._output.assert_has_calls([
-            call("\nDealer cards: ", [cmd_line_game.game.dealer_cards[0] + 'X']),
+            call("\nDealer cards: ", [cmd_line_game.game.dealer_cards[0]] + ['X']),
             call("My cards: ", cmd_line_game.game.my_cards, ' \n')
         ])

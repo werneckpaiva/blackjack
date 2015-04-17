@@ -18,7 +18,6 @@ class CommandLineGame():
 
     def run_game(self):
         while True:
-            self.print_hands()
             option = _input('\nHit(h) or Stand(s) or Quit(q): ').lower()
 
             if option == 's':
@@ -62,7 +61,7 @@ class CommandLineGame():
             return True
 
     def print_hands(self, print_all=False):
-        _output('\nDealer cards: ', [self.game.dealer_cards[0] + 'X'] if not print_all else self.game.dealer_cards)
+        _output('\nDealer cards: ', [self.game.dealer_cards[0]] + ['X'] if not print_all else self.game.dealer_cards)
         _output('My cards: ', self.game.my_cards, ' \n')
 
 
