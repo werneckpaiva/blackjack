@@ -2,34 +2,46 @@
 
 import unittest
 
-from blackjack.blackjack_game import BlackjackGame, GameBustedException
+from blackjack.blackjack_game import BlackjackGame, GameBustedException,\
+    GameUserBlackjackException
 
 
 class TestGame(unittest.TestCase):
 
     def test_start_game_player_cards(self):
         game = BlackjackGame()
+        game.init_game()
         self.assertEquals(len(game.my_cards), 2)
         self.assertEquals(len(game.dealer_cards), 2)
 
     def test_start_game_deck(self):
         game = BlackjackGame()
+        game.init_game()
         self.assertEquals(len(game.deck), 52 - 4)
 
     def test_start_game_cards_from_deck(self):
         game = BlackjackGame()
+        game.init_game()
         self.assertTrue(game.my_cards[0] in game.DECK)
         self.assertTrue(game.my_cards[1] in game.DECK)
         self.assertTrue(game.dealer_cards[0] in game.DECK)
         self.assertTrue(game.dealer_cards[1] in game.DECK)
 
+    def test_blackjack(self):
+        game = BlackjackGame()
+        game.init_game()
+        game.my_cards = ['K', 'A']
+        self.assertRaises(GameUserBlackjackException, game.check_if_blackjack)
+
     def test_cards_removed_from_deck(self):
         game = BlackjackGame()
+        game.init_game()
         same_card_from_deck = [card for card in game.deck if card == game.my_cards[0]]
         self.assertTrue(len(same_card_from_deck) <= 3)
 
     def test_hit(self):
         game = BlackjackGame()
+        game.init_game()
         game.my_cards = ["2", "2"]
         game.hit()
         self.assertEquals(len(game.my_cards), 3)
@@ -37,18 +49,21 @@ class TestGame(unittest.TestCase):
 
     def test_stand(self):
         game = BlackjackGame()
-        game.stand()
+        game.init_game()
+        game.do_stand()
         self.assertEquals(game.dealer_points, 21)
         self.assertEquals(game.my_points, 19)
 
     def test_win_user_21_dealer_below(self):
         game = BlackjackGame()
+        game.init_game()
         game.dealer_points = 19
         game.my_points = 21
         self.assertEquals(game.win(), BlackjackGame.WIN)
 
     def test_win_user_20_dealer_below(self):
         game = BlackjackGame()
+        game.init_game()
         game.dealer_points = 19
         game.my_points = 20
         self.assertEquals(game.win(), BlackjackGame.WIN)

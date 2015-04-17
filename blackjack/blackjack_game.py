@@ -16,14 +16,23 @@ class BlackjackGame(object):
     LOSE = -1
     DRAW = 0
 
-    def __init__(self, shuffle=False):
+    def init_game(self, shuffle=False):
         self.deck = list(self.DECK)
 
         if shuffle:
             self.shuffle_deck()
 
+        self.initialize_cards()
+        self.check_if_blackjack()
+
+    def initialize_cards(self):
         self.my_cards = [self.pick_a_card(), self.pick_a_card()]
         self.dealer_cards = [self.pick_a_card(), self.pick_a_card()]
+
+    def check_if_blackjack(self):
+        if len(self.my_cards) == 2 and \
+            self.sum_cards(self.my_cards) == 21:
+            raise GameUserBlackjackException()
 
     def shuffle_deck(self):
         random.shuffle(self.deck)
@@ -38,7 +47,7 @@ class BlackjackGame(object):
         if my_sum > 21:
             raise GameBustedException()
 
-    def stand(self):
+    def do_stand(self):
         while self.sum_cards(self.dealer_cards) <= 15:
             self.dealer_cards.append(self.pick_a_card())
 
@@ -77,4 +86,7 @@ class BlackjackGame(object):
 
 
 class GameBustedException(Exception):
+    pass
+
+class GameUserBlackjackException(Exception):
     pass
