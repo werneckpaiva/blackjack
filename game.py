@@ -23,7 +23,7 @@ class CommandLineGame():
 
             if option == 's':
                 self.game.stand()
-                _output('\nDealer cards: ', self.game.dealer_cards)
+                self.print_hands(print_all=True)
                 result = self.game.win()
                 if result == BlackjackGame.WIN:
                     _output('You win!\n')
@@ -37,8 +37,9 @@ class CommandLineGame():
             elif option == 'h':
                 try:
                     self.game.hit()
+                    self.print_hands()
                 except GameBustedException:
-                    _output('\nMy cards: ', self.game.my_cards, ' \n')
+                    self.print_hands(print_all=True)
                     _output('You lose!!')
 
                     if not self.restart_game_option():
@@ -52,6 +53,7 @@ class CommandLineGame():
 
     def new_game(self):
         self.game = BlackjackGame(shuffle=True)
+        self.print_hands()
 
     def restart_game_option(self):
         option = _input('\nPlay again?\nYes(y) or No(n): ').lower()
@@ -60,9 +62,8 @@ class CommandLineGame():
             return True
 
     def print_hands(self, print_all=False):
-        _output('\nDealer cards: ', [self.game.dealer_cards[0]] if not print_all else self.game.dealer_cards)
+        _output('\nDealer cards: ', [self.game.dealer_cards[0] + 'X'] if not print_all else self.game.dealer_cards)
         _output('My cards: ', self.game.my_cards, ' \n')
-
 
 
 def _output(*args):
