@@ -6,34 +6,42 @@ from blackjack.blackjack_game import BlackjackGame, GameBustedException
 
 class CommandLineGame():
 
+    command_line_game = None
+
     @classmethod
     def main(cls):
-        cls.new_game()
+        cls.command_line_game = CommandLineGame()
 
+    def __init__(self):
+        self.new_game()
+        self.run_game()
+
+    def run_game(self):
         while True:
+            self.print_hands()
             option = _input('\nHit(h) or Stand(s) or Quit(q): ').lower()
-            cls.print_hands()
 
             if option == 's':
-                cls.game.stand()
-                result = cls.game.win()
+                self.game.stand()
+                _output('\nDealer cards: ', self.game.dealer_cards)
+                result = self.game.win()
                 if result == BlackjackGame.WIN:
                     _output('You win!\n')
                 elif result == BlackjackGame.LOSE:
                     _output('You lose!\n')
                 else:
                     _output('Draw match!\n')
-                if not cls.restart_game_option():
+                if not self.restart_game_option():
                     break
 
             elif option == 'h':
                 try:
-                    cls.game.hit()
+                    self.game.hit()
                 except GameBustedException:
-                    _output('\nMy cards: ', cls.game.my_cards, ' \n')
+                    _output('\nMy cards: ', self.game.my_cards, ' \n')
                     _output('You lose!!')
 
-                    if not cls.restart_game_option():
+                    if not self.restart_game_option():
                         break
 
             elif option == 'q':
@@ -42,23 +50,18 @@ class CommandLineGame():
             else:
                 _output('Wrong option (s, h or q)')
 
-    @classmethod
-    def new_game(cls):
-        cls.game = BlackjackGame(shuffle=True)
-        _output('\nDealer cards: ', cls.game.dealer_cards[0])
-        _output('My cards: ', cls.game.my_cards)
+    def new_game(self):
+        self.game = BlackjackGame(shuffle=True)
 
-    @classmethod
-    def restart_game_option(cls):
+    def restart_game_option(self):
         option = _input('\nPlay again?\nYes(y) or No(n): ').lower()
         if option == 'y':
-            cls.new_game()
+            self.new_game()
             return True
 
-    @classmethod
-    def print_hands(cls):
-        _output('\nDealer cards: ', cls.game.dealer_cards)
-        _output('My cards: ', cls.game.my_cards, ' \n')
+    def print_hands(self, print_all=False):
+        _output('\nDealer cards: ', [self.game.dealer_cards[0]] if not print_all else self.game.dealer_cards)
+        _output('My cards: ', self.game.my_cards, ' \n')
 
 
 
