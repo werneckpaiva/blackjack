@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import unittest
-from mock import Mock, call
 import game
+import unittest
+
 from game import CommandLineGame
+from mock import call, Mock
 
 
 class TestGameInterface(unittest.TestCase):
@@ -25,6 +26,6 @@ class TestGameInterface(unittest.TestCase):
         game._input = lambda x: "q"
         CommandLineGame.main()
         game._output.assert_has_calls([
-            call("My cards: ", CommandLineGame.game.my_cards),
-            call("Dealer cards: ", CommandLineGame.game.dealer_cards[0])
-        ]) # ("My cards: ")
+            call("\nDealer cards: ", CommandLineGame.game.dealer_cards[0]),
+            call("My cards: ", CommandLineGame.game.my_cards)
+        ])  # ("My cards: ")
