@@ -12,13 +12,11 @@ class CommandLineGame():
 
         while True:
             option = _input('\nHit(h) or Stand(s) or Quit(q): ').lower()
+            cls.print_hands()
+
             if option == 's':
                 cls.game.stand()
-
-                _output('\nDealer cards: ', cls.game.dealer_cards)
-                _output('My cards: ', cls.game.my_cards, ' \n')
                 result = cls.game.win()
-
                 if result == BlackjackGame.WIN:
                     _output('You win!\n')
                 elif result == BlackjackGame.LOSE:
@@ -31,7 +29,6 @@ class CommandLineGame():
             elif option == 'h':
                 try:
                     cls.game.hit()
-                    _output('\nMy cards: ', cls.game.my_cards, ' \n')
                 except GameBustedException:
                     _output('\nMy cards: ', cls.game.my_cards, ' \n')
                     _output('You lose!!')
@@ -57,6 +54,12 @@ class CommandLineGame():
         if option == 'y':
             cls.new_game()
             return True
+
+    @classmethod
+    def print_hands(cls):
+        _output('\nDealer cards: ', cls.game.dealer_cards)
+        _output('My cards: ', cls.game.my_cards, ' \n')
+
 
 
 def _output(*args):
